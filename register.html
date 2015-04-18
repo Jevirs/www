@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js.js"></script>
+</head>
+
+<body>
+
+<div id="register">
+    <form name="register" method="post" action="register.php" onsubmit="return checkRegister()">
+        <h2>Sign Up</h2>
+        <table>
+        <tr>
+            <th>
+                <label for="name">
+                    Name:
+                </label>
+            </th>
+            <th>
+                <input type="text" id="name" name="name"  onblur="checkName(this.value)"/>
+            </th>
+            <th ><span id="show"></span></th>
+        </tr>
+        <tr>
+            <th>
+                <label for="password">
+                    Password:
+                </label>
+            </th>
+            <th>
+                <input type="password" id="password" name="password" onblur="checkPassword(this.value)"/>
+            </th>
+            <th><span id="showpassword"></span></th>
+        </tr>
+            <tr>
+                <th>
+                    <label for="confirm">
+                        Confirm:
+                    </label>
+                </th>
+                <th>
+                    <input type="password" id="confirm" name="comfirm" onblur="checkConfirm(this.value)"/>
+                </th>
+                <th><span id="showconfirm"></span></th>
+            </tr>
+            <tr>
+                <th>
+                    <label for="email">
+                       Email:
+                    </label>
+                </th>
+                <th>
+                    <input type="email" id="email" name="email" onblur="checkEmail(this.value)"/>
+                </th>
+                <th ><span id="showemail"></span></th>
+            </tr>
+        </table>
+        <div id="button">
+            <input type="submit" value="Submit"/>
+            <input type="reset"  value="Reset" onclick="clearShow()"/><br>
+        </div>
+    </form>
+</div>
+<script>
+    var xmlHttp;
+    function show(str){
+        xmlHttp=GetXmlHttpObject();
+        if (xmlHttp==null)
+        {
+            alert ("Browser does not support HTTP Request");
+            return
+        }
+        var url="name.php";
+        url=url+"?q="+str;
+        url=url+"&sid="+Math.random();
+        xmlHttp.onreadystatechange=stateChanged;
+        xmlHttp.open("GET",url,true);
+        xmlHttp.send(null)
+    }
+
+    function stateChanged(){
+        if (xmlHttp.readyState==4 || xmlHttp.status==200)
+        {
+            document.getElementById("show").innerHTML=xmlHttp.responseText
+        }
+    }
+
+    function GetXmlHttpObject(){
+        var xmlHttp=null;
+        try
+        {
+            // Firefox, Opera 8.0+, Safari
+            xmlHttp=new XMLHttpRequest();
+        }
+        catch (e)
+        {
+            //Internet Explorer
+            try
+            {
+                xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+            }
+            catch (e)
+            {
+                xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+        return xmlHttp;
+    }
+</script>
+
+
+</body>
+</html>
